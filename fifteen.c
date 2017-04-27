@@ -180,7 +180,28 @@ void init(void)
  * Prints the board in its current state.
  */
 void draw(void)
-//TODO
+{
+    for(int i=0;i<d;i++)
+    {
+        for(int j=0;j<d;j++)
+        {
+            board[d-1][d-1]='_';
+            if(i!=d-1||j!=d-1)
+            {
+               printf("%2i ",board[i][j]);
+            }
+            if(i==d-1&&j==d-1)
+            {
+                printf("%2c",board[i][j]);
+            
+            }
+           
+            
+        }
+        printf("\n");
+    }
+}
+
 
 /**
  * If tile borders empty space, moves tile and returns true, else
