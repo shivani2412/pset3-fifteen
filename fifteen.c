@@ -208,6 +208,36 @@ void draw(void)
  * returns false. 
  */
 bool move(int tile)
+{ 
+     
+     int temp;
+     
+     
+    for(int i=0;i<d;i++)
+    {   
+        
+        for(int j=0;j<d;j++)
+        { int k;
+         int l;
+        
+           if(board[i][j]=='_')
+           {
+               k=i;
+                l=j;
+           }
+           if(board[i][j]==tile&&(i==k||j==l))
+           {
+               temp=board[k][l];
+               board[k][l]=board[i][j];
+               board[i][j]=temp;
+               return true;
+           }
+            
+        }
+    }
+    return false;
+}
+
 //TODO
 
 /**
