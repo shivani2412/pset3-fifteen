@@ -206,14 +206,14 @@ void draw(void)
  * returns false. 
  */
 bool move(int tile)
-{       int temp;
-        int k=0;
-        int l=0;
-        int m=0;
-        int n=0;
+{       int temp=0;
+        
     for(int i=0;i<d;i++)
     {
-        
+        int k;
+        int l;
+        int m;
+        int n;
         for(int j=0;j<d;j++)
         { 
         
@@ -229,14 +229,14 @@ bool move(int tile)
                     m=i;
                     n=j;
                 }
-                if(k+1==m&&l==n)
+                if((k==m-1)&&(l==n))
                 {
                     temp=board[k][l];
                     board[k][l]=board[m][n];
                     board[m][n]=temp;
                     return true;
                 }
-                if(k==m&&l==n+1)
+                if((k==m)&&(l==n+1))
                 {
                     temp=board[k][l];
                     board[k][l]=board[m][n];
@@ -244,14 +244,14 @@ bool move(int tile)
                     return true;
                     
                 }
-                if(m+1==k&&l==n)
+                if((k==m+1)&&(l==n))
                 {
                     temp=board[k][l];
                     board[k][l]=board[m][n];
                     board[m][n]=temp;
                     return true;
                 }
-                if(k==m&&l+1==n)
+                if((k==m)&&(l==n-1))
                 {
                     temp=board[k][l];
                     board[k][l]=board[m][n];
@@ -272,11 +272,16 @@ bool move(int tile)
 bool won(void)
 {
     for(int i=0;i<d;i++)
-    {
+    { 
+         int count=1;
         for(int j=0;j<d;j++)
         {
-            if(board[i][j]<board[i][j+1])
-            return true;
+           if(board[i][j]==count)
+           {
+           count++;
+           if(count==d*d)
+           return true;
+           }
         }
     }
     return false;
