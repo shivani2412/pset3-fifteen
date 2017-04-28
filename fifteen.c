@@ -270,21 +270,29 @@ bool move(int tile)
  * else false.
  */
 bool won(void)
-{
+{  int count=1;
     for(int i=0;i<d;i++)
     { 
-         int count=1;
+         
         for(int j=0;j<d;j++)
-        {
+        { 
+        
            if(board[i][j]==count)
            {
            count++;
            if(count==d*d)
+           
            return true;
-           }
         }
+         else  
+         return false;  
+           
+           
+        }
+        
     }
-    return false;
+     return false; 
+    
 }
 
 
