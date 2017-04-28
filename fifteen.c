@@ -185,16 +185,14 @@ void draw(void)
     {
         for(int j=0;j<d;j++)
         {
-            board[d-1][d-1]='_';
-            if(i!=d-1||j!=d-1)
-            {
-               printf("%2i ",board[i][j]);
-            }
-            if(i==d-1&&j==d-1)
-            {
-                printf("%2c",board[i][j]);
             
-            }
+            if(board[i][j]==0)
+              
+                printf(" _");
+                else
+               printf("%2i ",board[i][j]);
+            
+            
            
             
         }
@@ -208,42 +206,81 @@ void draw(void)
  * returns false. 
  */
 bool move(int tile)
-{ 
-     
-     int temp;
-     
-     
+{       int temp;
+        int k=0;
+        int l=0;
+        int m=0;
+        int n=0;
     for(int i=0;i<d;i++)
-    {   
+    {
         
         for(int j=0;j<d;j++)
-        { int k;
-         int l;
+        { 
         
-           if(board[i][j]=='_')
-           {
-               k=i;
-                l=j;
-           }
-           if(board[i][j]==tile&&(i==k||j==l))
-           {
-               temp=board[k][l];
-               board[k][l]=board[i][j];
-               board[i][j]=temp;
-               return true;
-           }
+                if(board[i][j]==0)
+                {
+                    k=i;
+                     l=j;
+                    
+                }
+                
+                if(board[i][j]==tile)
+                {
+                    m=i;
+                    n=j;
+                }
+                if(k+1==m&&l==n)
+                {
+                    temp=board[k][l];
+                    board[k][l]=board[m][n];
+                    board[m][n]=temp;
+                    return true;
+                }
+                if(k==m&&l==n+1)
+                {
+                    temp=board[k][l];
+                    board[k][l]=board[m][n];
+                    board[m][n]=temp;
+                    return true;
+                    
+                }
+                if(m+1==k&&l==n)
+                {
+                    temp=board[k][l];
+                    board[k][l]=board[m][n];
+                    board[m][n]=temp;
+                    return true;
+                }
+                if(k==m&&l+1==n)
+                {
+                    temp=board[k][l];
+                    board[k][l]=board[m][n];
+                    board[m][n]=temp;
+                    return true;
+                }
             
         }
     }
     return false;
 }
 
-//TODO
 
 /**
  * Returns true if game is won (i.e., board is in winning configuration), 
  * else false.
  */
 bool won(void)
-//TODO
+{
+    for(int i=0;i<d;i++)
+    {
+        for(int j=0;j<d;j++)
+        {
+            if(board[i][j]<board[i][j+1])
+            return true;
+        }
+    }
+    return false;
+}
+
+
 
