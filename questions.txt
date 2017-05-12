@@ -1,4 +1,7 @@
-0. TODO
-1. TODO
-2. TODO
-3. TODO
+0. Besides 4x4 matrix,a player can pay with matrix upto 9x9 dimension which is defined by DIM_MAX and minimum 3x3 which is defined by DIM_MIN
+
+1. A 2-dimensional Array
+
+2. Greet function
+
+3. init(),draw(),move().won()

@@ -27,7 +27,7 @@
 int board[DIM_MAX][DIM_MAX];
 
 // dimensions
-int d;
+int dim;
 
 // prototypes
 void clear(void);
@@ -47,8 +47,8 @@ int main(int argc, string argv[])
     }
 
     // ensure valid dimensions
-    d = atoi(argv[1]);
-    if (d < DIM_MIN || d > DIM_MAX)
+    dim = atoi(argv[1]);
+    if (dim < DIM_MIN || dim > DIM_MAX)
     {
         printf("Board must be between %i x %i and %i x %i, inclusive.\n",
             DIM_MIN, DIM_MIN, DIM_MAX, DIM_MAX);
@@ -78,12 +78,12 @@ int main(int argc, string argv[])
         draw();
 
         // log the current state of the board (for testing)
-        for (int i = 0; i < d; i++)
+        for (int i = 0; i < dim; i++)
         {
-            for (int j = 0; j < d; j++)
+            for (int j = 0; j < dim; j++)
             {
                 fprintf(file, "%i", board[i][j]);
-                if (j < d - 1)
+                if (j < dim - 1)
                 {
                     fprintf(file, "|");
                 }
@@ -157,22 +157,24 @@ void greet(void)
 void init(void)
 {
     int temp;
-    int k=d*d-1;
-    for(int i=0;i<d;i++)
+    int k = dim * dim - 1;
+    for(int i=0;i < dim;i++)
     {
-        for(int j=0;j<d;j++)
+        for(int j=0;j < dim;j++)
         {
-            board[i][j]=k;
+            board[i][j] = k;
             k--;
-            if(k==0)
-            break;
+            if (k == 0)
+            { 
+                break;
+            }     
         }
     }
-    if(d%2==0)
+    if (dim % 2 == 0)
     {
-      temp =board[d-1][d-2];
-      board[d-1][d-2]=board[d-1][d-3];
-      board[d-1][d-3]=temp;
+        temp = board[dim - 1][dim - 2];
+        board[dim - 1][dim - 2] = board[dim - 1][dim - 3];
+        board[dim - 1][dim - 3] = temp;
     }
 }
 
@@ -181,16 +183,17 @@ void init(void)
  */
 void draw(void)
 {
-    for(int i=0;i<d;i++)
+    for(int i=0;i < dim;i++)
     {
-        for(int j=0;j<d;j++)
+        for(int j=0; j < dim;j++)
         {
             
-            if(board[i][j]==0)
-              
+            if (board[i][j] == 0)
+            { 
                 printf(" _");
-                else
-               printf("%2i ",board[i][j]);
+            }    
+                 else
+                printf("%2i ",board[i][j]);
             
             
            
@@ -206,58 +209,59 @@ void draw(void)
  * returns false. 
  */
 bool move(int tile)
-{       int temp=0;
+{       
+    int temp=0;
         
-    for(int i=0;i<d;i++)
+    for(int i=0;i < dim;i++)
     {
-        int k;
-        int l;
-        int m;
-        int n;
-        for(int j=0;j<d;j++)
+        int k_1;
+        int l_1;
+        int m_1;
+        int n_1;
+        for(int j=0;j < dim;j++)
         { 
         
-                if(board[i][j]==0)
-                {
-                    k=i;
-                     l=j;
+            if (board[i][j] == 0)
+            {
+                k_1 = i;
+                l_1 = j;
                     
-                }
+            }
                 
-                if(board[i][j]==tile)
-                {
-                    m=i;
-                    n=j;
+            if (board[i][j] == tile)
+            {
+                m_1 = i;
+                n_1 = j;
+            }
+            if ((k_1 == m_1 - 1) && (l_1 == n_1))
+            {
+                temp = board[k_1][l_1];
+                board[k_1][l_1] = board[m_1][n_1];
+                board[m_1][n_1] = temp;
+                return true;
                 }
-                if((k==m-1)&&(l==n))
-                {
-                    temp=board[k][l];
-                    board[k][l]=board[m][n];
-                    board[m][n]=temp;
-                    return true;
-                }
-                if((k==m)&&(l==n+1))
-                {
-                    temp=board[k][l];
-                    board[k][l]=board[m][n];
-                    board[m][n]=temp;
-                    return true;
+            if ((k_1 == m_1) && (l_1 == n_1 + 1))
+            {
+                temp = board[k_1][l_1];
+                board[k_1][l_1] = board[m_1][n_1];
+                board[m_1][n_1] = temp;
+                return true;
                     
-                }
-                if((k==m+1)&&(l==n))
-                {
-                    temp=board[k][l];
-                    board[k][l]=board[m][n];
-                    board[m][n]=temp;
-                    return true;
-                }
-                if((k==m)&&(l==n-1))
-                {
-                    temp=board[k][l];
-                    board[k][l]=board[m][n];
-                    board[m][n]=temp;
-                    return true;
-                }
+            }
+            if ((k_1 == m_1 + 1) && (l_1 == n_1))
+            {
+                temp = board[k_1][l_1];
+                board[k_1][l_1] = board[m_1][n_1];
+                board[m_1][n_1] = temp;
+                return true;
+            }
+            if ((k_1 == m_1) && (l_1 == n_1 - 1))
+            {
+                temp = board[k_1][l_1];
+                board[k_1][l_1] = board[m_1][n_1];
+                board[m_1][n_1] = temp;
+                return true;
+            }
             
         }
     }
@@ -270,28 +274,30 @@ bool move(int tile)
  * else false.
  */
 bool won(void)
-{  int count=1;
-    for(int i=0;i<d;i++)
+{  
+    int count = 1;
+    for(int i=0;i < dim;i++)
     { 
          
-        for(int j=0;j<d;j++)
+        for(int j=0;j < dim;j++)
         { 
         
-           if(board[i][j]==count)
-           {
-           count++;
-           if(count==d*d)
-           
-           return true;
+            if (board[i][j] == count)
+            {
+                count++;
+                if (count == dim * dim)
+                {
+                    return true;
+                }    
         }
          else  
-         return false;  
+                return false;  
            
            
         }
         
     }
-     return false; 
+    return false; 
     
 }
 
